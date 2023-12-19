@@ -1,0 +1,7 @@
+requests
+numpy
+configparser
+argparse
+flask
+asyncio
+aiohttp
