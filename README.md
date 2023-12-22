@@ -37,13 +37,14 @@ This version introduces matrix-switching capabilities for pipWindow-Layers and a
 ## This demonstrates the convention. The matrix is called "POS"
 <img width="313" alt="two-positions" src="https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/dfa6a504-bb88-494f-bae1-dc2ddd938be8">
 
-
 ## Configuration File (config.ini)
 - In `config.ini`, set default values and a web control password for enhanced security.
-- 
+
 ## Future Enhancements for Matrix Switcher
 - **Multiple Matrix Arrangement**: Automate the simultaneous arrangement of multiple matrix switchers.
 - **Faster HTTP-API Interaction**: Enhance the speed of submitting changes to the mimoLive HTTP-API.
 - **Additional Modes**: Implement two new modes based on a square-root algorithm that considers only visible elements.
 - **Mode Change via Automation**: Enable changing modes through an automation layer.
 - **Prominent Mode**: Similar to the exclusive mode, this would allow one image to be significantly enlarged, with other images arranged around it.
+- **server.py**: You should be able to configure the port in `config.ini`.
+- **special functions**: multiple setLive/setOff and setValues of all mimoLive-Values should also be possible by typing a micro-script.
