@@ -40,10 +40,8 @@ This version introduces matrix-switching capabilities for pipWindow-Layers and a
 <img width="313" alt="two-positions" src="https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/dfa6a504-bb88-494f-bae1-dc2ddd938be8">
 
 ## Add at every Automation-Layer this code:
-`httpRequest(http://localhost:8888/mimoLiveAPI)`
-Example:
 <img width="323" alt="Bildschirmfoto 2023-12-22 um 05 48 07" src="https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/220c5952-7d76-4b11-aaf1-f3f359fe1c32">
-
+`httpRequest(http://localhost:8888/mimoLiveAPI)`
 
 ## Configuration File (config.ini)
 - In `config.ini`, set default values and a web control password for enhanced security.
