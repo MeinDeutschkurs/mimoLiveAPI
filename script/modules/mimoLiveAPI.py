@@ -1,4 +1,4 @@
-# Version 1.4
+# Version 1.5
 import requests
 import configparser
 import hashlib
@@ -13,6 +13,7 @@ import time
 # globals
 mimo_data_flat = {}
 proc_list = []
+global_session = None
 
 # Function to load configuration from an INI file
 def load_config(filename):
@@ -680,23 +681,22 @@ def setLiveOrOff(path, mode):
         return None
 
 async def make_authenticated_request_async(method, api_path, action="", data=None):
-    password_hash = hashlib.sha256(PASSWORD.encode()).hexdigest()
+    global global_session
     headers = {
-        "X-MimoLive-Password-SHA256": password_hash,
+        "X-MimoLive-Password-SHA256": hashlib.sha256(PASSWORD.encode()).hexdigest(),
         "Content-Type": "application/json"
     }
 
-    async with aiohttp.ClientSession() as session:
-        if method == 'PUT':
-            async with session.put(api_path + action, headers=headers, json=data) as response:
-                return await response.text()
-        elif method == 'GET':
-            async with session.get(api_path + action, headers=headers) as response:
-                return await response.text()
+    if method == 'PUT':
+        async with global_session.put(api_path + action, headers=headers, json=data) as response:
+            return await response.text()
+    elif method == 'GET':
+        async with global_session.get(api_path + action, headers=headers) as response:
+            return await response.text()
 
 async def process_item(item):
+    global global_session
     if item["request"] == "PUT":
-        # item["update"] = unflatten(item.get("update")) 
         data_str = json.dumps(item["update"]) if item.get("update") else '{}'
         return await make_authenticated_request_async('PUT', item["api_path"], data=json.loads(data_str))
     elif item["request"] == "GET":
@@ -729,59 +729,71 @@ async def execute_separated_lists(put_list, get_list, sleep_list):
 
 # main method
 async def main():
+    global global_session
     global mimo_data_flat 
-    # GET EVERYTHING FROM MIMO-LIVE TO REDUCE REQUESTS
-    mimolive_data = build_mimolive_cache()
-    # WORK WITH FLAT STRUCTURE
-    mimo_data_flat = flatten(mimolive_data)
-    
-    # COMMAND LINE
-    parser = argparse.ArgumentParser(description='Control mimoLive documents.')
-    parser.add_argument('--setLive', type=str, help='Set documents, layers, variants, layer-sets or output-destinations live')
-    parser.add_argument('--setOff', type=str, help='Set documents, layers, variants or output-destinations off')
-    parser.add_argument('--setValue', type=str, help='Set specific values for given key paths')
-    parser.add_argument('--matrix', action='store_true', help='updates matrix, used by server.py')
+    try:
+        # Erstellen der globalen ClientSession
+        global_session = aiohttp.ClientSession()
 
-    args = parser.parse_args()
+        # GET EVERYTHING FROM MIMO-LIVE TO REDUCE REQUESTS
+        mimolive_data = build_mimolive_cache()
+        # WORK WITH FLAT STRUCTURE
+        mimo_data_flat = flatten(mimolive_data)
+        
+        # COMMAND LINE
+        parser = argparse.ArgumentParser(description='Control mimoLive documents.')
+        parser.add_argument('--setLive', type=str, help='Set documents, layers, variants, layer-sets or output-destinations live')
+        parser.add_argument('--setOff', type=str, help='Set documents, layers, variants or output-destinations off')
+        parser.add_argument('--setValue', type=str, help='Set specific values for given key paths')
+        parser.add_argument('--matrix', action='store_true', help='updates matrix, used by server.py')
 
-    if args.matrix:
-        # ADD LIVESTATES TO MATRIX
-        mimo_data_flat = add_livestate_to_matrix(mimo_data_flat)
-        # CALCULATE MATRIX
-        matrix = get_key_value_by_prefix(mimo_data_flat, "matrix.")
-        apply_switcher_logic(matrix)
+        args = parser.parse_args()
 
-    if args.setValue:
-        args.setValue = preprocess_args(args.setValue)
-        value_requests = json.loads(args.setValue)
-        for path, updates in value_requests.items():
-            api_path, query_path = find_closest_api_path(path)
-            if api_path:
-                full_path, query = api_path
-                update_data = {query_path: updates}
-                proc_list.append({
-                    "api_path": f"{BASE_URL}/{full_path}",
-                    "request": "PUT",
-                    "update": update_data
-                })
+        if args.matrix:
+            # ADD LIVESTATES TO MATRIX
+            mimo_data_flat = add_livestate_to_matrix(mimo_data_flat)
+            # CALCULATE MATRIX
+            matrix = get_key_value_by_prefix(mimo_data_flat, "matrix.")
+            apply_switcher_logic(matrix)
 
-    if args.setOff:
-        args.setOff = preprocess_args(args.setOff)
-        paths = json.loads(args.setOff)
-        for path in paths:
-            setLiveOrOff(path, "setOff")
+        if args.setValue:
+            # Verarbeitung der setValue Argumente
+            args.setValue = preprocess_args(args.setValue)
+            value_requests = json.loads(args.setValue)
+            for path, updates in value_requests.items():
+                api_path, query_path = find_closest_api_path(path)
+                if api_path:
+                    full_path, query = api_path
+                    update_data = {query_path: updates}
+                    proc_list.append({
+                        "api_path": f"{BASE_URL}/{full_path}",
+                        "request": "PUT",
+                        "update": update_data
+                    })
 
-    if args.setLive:
-        args.setLive = preprocess_args(args.setLive)
-        paths = json.loads(args.setLive)
-        for path in paths:
-            setLiveOrOff(path, "setLive")
+        if args.setOff:
+            # Verarbeitung der setOff Argumente
+            args.setOff = preprocess_args(args.setOff)
+            paths = json.loads(args.setOff)
+            for path in paths:
+                setLiveOrOff(path, "setOff")
 
-    # EXECUTE THE PROCESS LIST
-    prepare_proc_list()
-    put_list, get_list, sleep_list = separate_proc_list(proc_list)
-    await execute_separated_lists(put_list, get_list, sleep_list)
+        if args.setLive:
+            # Verarbeitung der setLive Argumente
+            args.setLive = preprocess_args(args.setLive)
+            paths = json.loads(args.setLive)
+            for path in paths:
+                setLiveOrOff(path, "setLive")
 
-# run script/main method
+        # EXECUTE THE PROCESS LIST
+        prepare_proc_list()
+        put_list, get_list, sleep_list = separate_proc_list(proc_list)
+        await execute_separated_lists(put_list, get_list, sleep_list)
+
+    finally:
+        # Sicherstellen, dass die globale ClientSession geschlossen wird
+        await global_session.close()
+
+# Hauptprogramm ausführen
 if __name__ == "__main__":
     asyncio.run(main())
