@@ -52,9 +52,9 @@ If you want to switch immediately, add `httpRequest(http://localhost:8888/mimoLi
 - **Additional Types**: Implement two new types of transition based on a square-root algorithm that considers only visible elements.
 - **Type Change via Automation**: Enable changing types through an automation layer.
 - **Prominent Mode**: Similar to the exclusive mode, this would allow one image to be significantly enlarged, with other images arranged around it.
-- **server.py**: You should be able to configure the port in `config.ini`.
 - **special functions**: multiple individual setLive/setOff and setValues of all mimoLive-Values should also be possible by typing a micro-script.
 - **switcher background**: Automate the simultaneous arrangement of a background element.
 
 ## DONE since 1.4:
 - **Faster HTTP-API Interaction**: Enhance the speed of submitting changes to the mimoLive HTTP-API.
+- **server.py**: You should be able to configure the port in `config.ini`.
