@@ -9,7 +9,7 @@ How to?
 4. Open mimoLive and the show.tvshow-document from demo-show folder.
 5. Open Web Control
 
-![Uploading webcontrol-deom.png…]()
+<img width="992" alt="webcontrol-deom" src="https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/f19823ae-991e-48d1-84cf-d94e8c529241">
 
 Notice:
 The Demo-Document is a great starting point:
