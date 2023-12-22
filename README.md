@@ -34,9 +34,13 @@ This version introduces matrix-switching capabilities for pipWindow-Layers and a
 - **Offset Control**: "offset_ANYNAME" modifies positions using an Automation Layer, with options such as TOP, LEFT, BOTTOM, RIGHT (values can be 0,0,0,0 or 0.5, 0.5, 0, 0).
 - **Mode Control**: "mode_ANYNAME" allows switching between modes like MOVE and CUT in an Automation layer.
 
+## This demonstrates the convention. The matrix is called "POS"
+<img width="313" alt="two-positions" src="https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/dfa6a504-bb88-494f-bae1-dc2ddd938be8">
+
+
 ## Configuration File (config.ini)
 - In `config.ini`, set default values and a web control password for enhanced security.
-
+- 
 ## Future Enhancements for Matrix Switcher
 - **Multiple Matrix Arrangement**: Automate the simultaneous arrangement of multiple matrix switchers.
 - **Faster HTTP-API Interaction**: Enhance the speed of submitting changes to the mimoLive HTTP-API.
