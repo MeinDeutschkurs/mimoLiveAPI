@@ -2,37 +2,44 @@
 
 **Version 1.4 - First Public Release**
 
-This version enables matrix-switching of pipWindow-Layers and audio-only Layers in mimoLive.
+This version introduces matrix-switching capabilities for pipWindow-Layers and audio-only Layers within mimoLive.
 
 ![Program Output Demo](https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/a0cb90c3-3017-4ead-b6a6-77be8637ecf9)
 
-## How to Set Up
-1. **Clone or Download**: Get the repository onto your local machine.
-2. **Prepare**: Open Terminal, navigate (`cd`) to the `script` folder within the downloaded directory.
-3. **Initialize**: Execute `sh start.sh` by typing it into Terminal and pressing enter.
-4. **Launch mimoLive**: Open mimoLive and load the `show.tvshow` document from the `demo-show` folder.
-5. **Access Web Control**: Utilize the Web Control feature in mimoLive.
+## Setup Instructions
+1. **Clone or Download**: Retrieve the repository onto your local machine.
+2. **Prepare Environment**: Open Terminal, navigate (`cd`) to the `script` folder within the downloaded repository.
+3. **Initialization**: Type `sh start.sh` in Terminal and press Enter to run the script.
+4. **Launch mimoLive**: Open the mimoLive application and load the `show.tvshow` document from the `demo-show` folder.
+5. **Web Control Access**: Engage with the Web Control feature in mimoLive.
 
 ![Web Control Demo](https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/f19823ae-991e-48d1-84cf-d94e8c529241)
 
 ## Important Notes
-- **Demo Document**: The included demo document is an excellent starting point. It combines pipWindow, audioOnly, and Automation-Layers into a single element in the matrix.
-- **Customization**: You can add as many pipWindow and audio-only layers as your Mac can support. Corresponding buttons need to be added to the Web Control interface.
-- **Layer Management**: If you remove layers from the demo setup, ensure to also remove them from Web Control to maintain consistency.
+- **Demo Document**: A comprehensive starting point is provided by the demo document. It integrates pipWindow, audioOnly, and Automation-Layers into a cohesive matrix element.
+- **Customization**: Add as many pipWindow and audio-only layers as your Mac can handle. It's necessary to add corresponding control buttons in the Web Control interface.
+- **Layer Management**: Consistency is key. If you remove any layers from the demo, ensure to remove the corresponding elements from Web Control as well.
 
 ## Naming Conventions
-- **Matrix Name**: Use 'ANYNAME' to represent the name of your matrix. This name should be consistent across all layers.
+- **Matrix Naming**: Use 'ANYNAME' as a placeholder for your matrix name. This needs to be consistent across all layers.
 
-## How to Create Elements
-- **Matrix**: Name it as "matrix_ANYNAME". This will be used in an automation layer with variants like ON, OFF.
-- **Video Element**: "video_ANYNAME_NUMBER" represents a pipWindow-Layer at a specific position.
-- **Audio Element**: "audio_ANYNAME_NUMBER" corresponds to the audio layer for a given position.
-- **Automation Element**: "auto_ANYNAME_NUMBER" links to the automation layer for a particular position, with variants ON, VIDEO, AUDIO, OFF.
+## Creating Matrix Elements
+- **Matrix Layer**: Denote as "matrix_ANYNAME". Utilized in an automation layer with options such as ON, OFF.
+- **Video Element**: "video_ANYNAME_NUMBER" signifies a pipWindow-Layer at a designated position.
+- **Audio Element**: "audio_ANYNAME_NUMBER" is the respective audio layer for that position.
+- **Automation Element**: "auto_ANYNAME_NUMBER" refers to the automation layer for a specific position, with options like ON, VIDEO, AUDIO, OFF.
 
 ## Special Features and Switches
-- **Exclusive Control**: "exclusive_ANYNAME" controls fullscreen through an Automation Layer (Variants: 1, 2, 3, etc.).
-- **Offset Control**: "offset_ANYNAME" adjusts positions through an Automation Layer. Variants include TOP, LEFT, BOTTOM, RIGHT, and can be set to values like 0,0,0,0 or 0.5, 0.5, 0, 0.
-- **Mode Control**: "mode_ANYNAME" switches between modes (MOVE, CUT) in an Automation layer.
+- **Exclusive Control**: "exclusive_ANYNAME" manages fullscreen modes in an Automation Layer (Variants: 1, 2, 3, etc.).
+- **Offset Control**: "offset_ANYNAME" modifies positions using an Automation Layer, with options such as TOP, LEFT, BOTTOM, RIGHT (values can be 0,0,0,0 or 0.5, 0.5, 0, 0).
+- **Mode Control**: "mode_ANYNAME" allows switching between modes like MOVE and CUT in an Automation layer.
 
 ## Configuration File (config.ini)
-Configure default values and set a web control password for additional security in the `config.ini` file.
+- In `config.ini`, set default values and a web control password for enhanced security.
+
+## Future Enhancements for Matrix Switcher
+- **Multiple Matrix Arrangement**: Automate the simultaneous arrangement of multiple matrix switchers.
+- **Faster HTTP-API Interaction**: Enhance the speed of submitting changes to the mimoLive HTTP-API.
+- **Additional Modes**: Implement two new modes based on a square-root algorithm that considers only visible elements.
+- **Mode Change via Automation**: Enable changing modes through an automation layer.
+- **Prominent Mode**: Similar to the exclusive mode, this would allow one image to be significantly enlarged, with other images arranged around it.
