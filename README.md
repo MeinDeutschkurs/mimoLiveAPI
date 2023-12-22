@@ -12,7 +12,7 @@ This version introduces matrix-switching capabilities for pipWindow-Layers and a
 1. **Clone or Download**: Retrieve the repository onto your local machine.
 2. **Prepare Environment**: Open Terminal, navigate (`cd`) to the `script` folder within the downloaded repository.
 3. **Initialization**: Type `sh start.sh` in Terminal and press Enter to run the script.
-4. **Launch mimoLive**: Open the mimoLive application and load the `show.tvshow` document from the `demo-show` folder.
+4. **Launch mimoLive**: Open the mimoLive application and load the extracted `show.tvshow` document from the `demo-show` folder. BTW: Copy it to any other folder if you want to do a project based on it.
 5. **Web Control Access**: Engage with the Web Control feature in mimoLive.
 
 ![Web Control Demo](https://github.com/MeinDeutschkurs/mimoLiveAPI/assets/129950466/f19823ae-991e-48d1-84cf-d94e8c529241)
