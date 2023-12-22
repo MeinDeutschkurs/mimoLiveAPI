@@ -1,6 +1,6 @@
 # mimoLiveAPI v1.5
 
-**Version 1.5** - Added qucker way to submit data to the API. It should be possible to submit changes for up to 6 pipWindow Layers within one frame.
+**Version 1.5** - Introduced a faster method for submitting data to the API. It is now feasible to submit changes for up to 6 pipWindow Layers within a single frame. Additionally, the script server's port is now configurable.
 
 **Version 1.4 - First Public Release**
 
